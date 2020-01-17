@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../../components/common/Button';
+import { Link } from 'react-router-dom';
 import logo from '../../lib/image/logo/instagram-2.svg';
 import homePhone from '../../lib/image/homepage/home-phones.png';
 import screenshot from '../../lib/image/homepage/screenshot5.jpg';
@@ -78,17 +78,6 @@ const Logo = styled.div`
     margin: 22px auto 12px;
 `;
 
-const SubTitle = styled.h2`
-    font-weight: 600;
-    line-height: 20px;
-    font-size: 17px;
-    margin: 0 40px 10px;
-    color: #999;
-    text-align: center;
-`;
-
-
-
 const LoginBox = styled.div`
     background-color: #fff;
     border: 1px solid #e6e6e6;
@@ -105,26 +94,39 @@ const LoginBoxTitle = styled.p`
 `;
 
 const AuthTemplate = ({ children }) => {
+  const { type } = children.props;
+
   return (
     <AuthTemplateBlock>
       <MainBox>
-        <PhoneBox>
-          <PhoneImageBox>
-            <ScreenShot src={screenshot}></ScreenShot>
-          </PhoneImageBox>
-        </PhoneBox>
+        {type === 'register' && (
+          <PhoneBox>
+            <PhoneImageBox>
+              <ScreenShot src={screenshot}></ScreenShot>
+            </PhoneImageBox>
+          </PhoneBox>
+        )}
         <RightBox>
           <RegisterBox>
             <Logo></Logo>
-            <SubTitle>친구들의 사진과 동영상을 보려면 가입하세요.</SubTitle>
-            <Button>Facebook으로 로그인</Button>
+            {children}
           </RegisterBox>
-          <LoginBox>
-            <LoginBoxTitle>
-              계정이 있으신가요?
-              <a href="#">로그인</a>
-            </LoginBoxTitle>
-          </LoginBox>
+
+          {type === 'register' ? (
+            <LoginBox>
+              <LoginBoxTitle>
+                계정이 있으신가요?
+              <Link to="/#">로그인</Link>
+              </LoginBoxTitle>
+            </LoginBox>
+          ) : (
+              <LoginBox>
+                <LoginBoxTitle>
+                  계정이 없으신가요?
+              <Link to="/#">가입하기</Link>
+                </LoginBoxTitle>
+              </LoginBox>
+            )}
         </RightBox>
       </MainBox>
     </AuthTemplateBlock>
